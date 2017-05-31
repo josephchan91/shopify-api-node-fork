@@ -46,4 +46,17 @@ Customer.prototype.accountActivationUrl = function accountActivationUrl(id) {
   }).then(body => body.account_activation_url);
 };
 
+/**
+ * Retrieves orders belonging to a customer
+ *
+ * @param {Number} id Customer ID
+ * @return {Promise} Promise that resolves with the result
+ * @public
+ */
+Customer.prototype.orders = function orders(id) {
+  const url = this.buildUrl(`${id}/orders`);
+  return this.shopify.request(url, 'GET', undefined)
+    .then(body => body.orders);
+};
+
 module.exports = Customer;

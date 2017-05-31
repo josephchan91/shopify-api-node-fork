@@ -121,4 +121,15 @@ describe('Shopify#customer', () => {
     return shopify.customer.count()
       .then(data => expect(data).to.equal(1));
   });
+
+  it('retrieves orders of a customer', () => {
+    const output = fixtures.res.orders;
+
+    scope
+      .get('/admin/customers/207119551/orders.json')
+      .reply(200, output);
+
+    return shopify.customer.orders(207119551)
+      .then(data => expect(data).to.deep.equal(output.orders));
+  });
 });
